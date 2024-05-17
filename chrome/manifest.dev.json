@@ -1,10 +1,10 @@
 {
   "version": "0.0.0",
-  "name": "react-chrome-extension-example",
+  "name": "form-data-observe-extension",
   "manifest_version": 2,
-  "description": "Example for react-chrome-extension-boilerplate",
+  "description": "一个大表单数据响应式观察器",
   "browser_action": {
-    "default_title": "React Chrome Extension Example",
+    "default_title": "一个大表单数据响应式观察器",
     "default_popup": "popup.html"
   },
   "icons": {
@@ -25,6 +25,15 @@
     "tabs",
     "storage",
     "https://github.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "run_at": "document_start",
+      "js": [
+        "js/content_script.js"
+      ]
+    }
   ],
   "content_security_policy": "default-src 'self'; script-src 'self' http://localhost:3000 https://localhost:3000 'unsafe-eval'; connect-src http://localhost:3000 https://localhost:3000; style-src * 'unsafe-inline' 'self' blob:; img-src 'self' data:;"
 }

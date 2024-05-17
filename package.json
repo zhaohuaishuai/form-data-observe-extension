@@ -16,7 +16,15 @@
     "type": "git",
     "url": "https://github.com/jhen0409/react-chrome-extension-boilerplate.git"
   },
-  "keywords": ["chrome", "extension", "react", "redux", "hot reload", "webpack", "boilerplate"],
+  "keywords": [
+    "chrome",
+    "extension",
+    "react",
+    "redux",
+    "hot reload",
+    "webpack",
+    "boilerplate"
+  ],
   "author": "Jhen <developer@jhen.me>",
   "license": "MIT",
   "devDependencies": {
@@ -65,6 +73,8 @@
     "react": "^15.0.2",
     "react-dock": "^0.2.3",
     "react-dom": "^15.0.2",
+    "react-json-view": "^1.20.1",
+    "react-json-view-lite": "0.9.4",
     "react-redux": "^4.3.0",
     "redux": "^3.2.1",
     "redux-thunk": "^2.0.1"
