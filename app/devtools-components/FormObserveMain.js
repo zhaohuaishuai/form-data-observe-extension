@@ -1,45 +1,109 @@
 import React, { Component, PropTypes } from 'react';
-import hljs from '../actions/hljs';
+import { DataFormObserve } from '../actions/index';
 
 export default class FormObserveMain extends Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             data: {},
             codeHtml: '',
-        }
+            heightStyle: {
+                lineHeight: `${30}px`
+            },
+            line: []
+        };
     }
     static propTypes = {
         formData: PropTypes.object.isRequired
     }
     componentDidMount() {
-        this.init()
+        this.init();
     }
     init() {
-        this.updateData(this.props.formData)
+        const dfos = new DataFormObserve({
+            container: this.refs.codeRef,
+            onUpdate: (item) => {
+                console.log("item-->", item)
+                this.setState({
+                    ...this.state,
+                    line: item.nodeStrinSplice
+                })
+            }
+        })
+        console.log("init-->", dfos)
+        this.dataFormObserve = dfos
+        this.updateData(this.props.formData);
     }
     updateData(data: any) {
-        const json = JSON.stringify(data, null, 2)
-        const hj = hljs.highlight(json, { language: 'javascript' })
-        console.log('hj', hj)
-        this.setState({
-            ...this.state,
-            codeHtml: hj.value,
-            data: data
-        })
+        if (this.dataFormObserve) {
+            this.dataFormObserve.updata(data);
+        }
     }
     codeHtml() {
-        console.log("this.props.formData-->",this.props.formData)
-        const json = JSON.stringify(this.props.formData, null, 2)
-        const hj = hljs.highlight(json, { language: 'javascript' })
-        console.log('hj', hj)
-        return hj.value
+
+    }
+    handleExtend(item) {
+        if (this.dataFormObserve) {
+            this.dataFormObserve.handleExtendsNode(data);
+        }
+    }
+    componentDidUpdate(prevProps){
+        if(JSON.stringify(prevProps.formData) !== JSON.stringify(this.props.formData)){
+            this.updateData(this.props.formData);
+        }
     }
     render() {
+       
         return (
-            <pre style={{ marginTop: 0 }}>
-                <code className='hljs' dangerouslySetInnerHTML={{ __html: this.codeHtml.call(this) }}></code>
-            </pre>
-        )
+            <div style={{ display: 'flex' }}>
+                <div
+                    style={{
+                        paddingBlock: '1em',
+                       
+                    }}
+                >
+                    {
+                        this.state.line.map((item, index) => (
+                            <div
+                                onClick={() => this.handleExtend(item)}
+                                style={{
+                                    ...this.state.heightStyle,
+                                    paddingInline: 10,
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    columnGap: '10px',
+                                }}
+                            >
+                                <div
+                                    style={{ color: '#666666', width: '20px', textAlign: 'right' }}
+                                >
+                                    {index + 1}
+                                </div>
+                                <div
+                                    style={{
+                                        width: '12px',
+                                        height: '12px',
+                                        lineHeight: item.isExpansion ? '9px' : '12px',
+                                        textAlign: 'center',
+                                        cursor: 'pointer',
+                                        border: item.isNode ? '1px solid #333333' : '',
+                                    }}
+                                >
+                                    {item.isNode ? (item.isExpansion ? '-' : '+') : ''}
+                                </div>
+                            </div>
+                        ))
+                    }
+                </div>
+                <pre style={{ marginTop: 0 }}>
+                    <code
+                        ref="codeRef"
+                        className="hljs"
+                        style={{ ...this.state.heightStyle, overflow: 'auto' }}
+                    />
+                </pre>
+            </div>
+
+        );
     }
 }
