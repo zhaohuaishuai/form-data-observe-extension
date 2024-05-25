@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { DataFormObserve } from '../actions/index';
+import { DataFormObserve,ScrollUpdateObserve } from '../actions/index';
 
 export default class FormObserveMain extends Component {
     constructor(props) {
@@ -17,7 +17,10 @@ export default class FormObserveMain extends Component {
         formData: PropTypes.object.isRequired
     }
     componentDidMount() {
+         
         this.init();
+
+        
     }
     init() {
         const dfos = new DataFormObserve({
@@ -28,7 +31,8 @@ export default class FormObserveMain extends Component {
                     ...this.state,
                     line: item.nodeStrinSplice
                 })
-            }
+            },
+            plugins: [new ScrollUpdateObserve()],
         })
         console.log("init-->", dfos)
         this.dataFormObserve = dfos
@@ -36,7 +40,7 @@ export default class FormObserveMain extends Component {
     }
     updateData(data: any) {
         if (this.dataFormObserve) {
-            this.dataFormObserve.updata(data);
+            this.dataFormObserve.update(data);
         }
     }
     codeHtml() {
@@ -44,7 +48,7 @@ export default class FormObserveMain extends Component {
     }
     handleExtend(item) {
         if (this.dataFormObserve) {
-            this.dataFormObserve.handleExtendsNode(data);
+            this.dataFormObserve.handleExtendsNode(item);
         }
     }
     componentDidUpdate(prevProps){
@@ -87,6 +91,7 @@ export default class FormObserveMain extends Component {
                                         textAlign: 'center',
                                         cursor: 'pointer',
                                         border: item.isNode ? '1px solid #333333' : '',
+                                        color:'#fff'
                                     }}
                                 >
                                     {item.isNode ? (item.isExpansion ? '-' : '+') : ''}
@@ -95,7 +100,7 @@ export default class FormObserveMain extends Component {
                         ))
                     }
                 </div>
-                <pre style={{ marginTop: 0 }}>
+                <pre style={{ marginTop: 0 ,flex:1}}>
                     <code
                         ref="codeRef"
                         className="hljs"
