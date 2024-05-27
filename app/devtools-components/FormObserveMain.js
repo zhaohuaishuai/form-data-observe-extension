@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { DataFormObserve,ScrollUpdateObserve } from '../actions/index';
+import { DataFormObserve,ScrollUpdateObserve,DeleteLogObserve } from '../actions/index';
 
 export default class FormObserveMain extends Component {
     constructor(props) {
@@ -32,7 +32,9 @@ export default class FormObserveMain extends Component {
                     line: item.nodeStrinSplice
                 })
             },
-            plugins: [new ScrollUpdateObserve()],
+            plugins: [new ScrollUpdateObserve(),new DeleteLogObserve(null,{
+                id: 'delLogContainer'
+            })],
         })
         console.log("init-->", dfos)
         this.dataFormObserve = dfos
@@ -100,12 +102,25 @@ export default class FormObserveMain extends Component {
                         ))
                     }
                 </div>
-                <pre style={{ marginTop: 0 ,flex:1}}>
+                <pre style={{ marginTop: 0 ,flex:1, position: 'relative' }}>
                     <code
                         ref="codeRef"
                         className="hljs"
                         style={{ ...this.state.heightStyle, overflow: 'auto' }}
                     />
+                    <div
+                        id="delLogContainer"
+                        style={{
+                        background: 'rgba(0,0,0,0.5)',
+                        padding: '6px 10px',
+
+                        width: '100%',
+                        height: '120px',
+                        position: 'sticky',
+                        bottom: 0,
+                        color:'#eee'
+                        }}
+                    ></div>
                 </pre>
             </div>
 

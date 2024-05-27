@@ -13,7 +13,7 @@
     "128": "img/icon-128.png"
   },
   "web_accessible_resources": [
-    "inject.html"
+    
   ],
   "background": {
     "page": "background.html"
@@ -33,6 +33,5 @@
         "js/content_script.js"
       ]
     }
-  ],
-  "content_security_policy": "default-src 'self'; script-src 'self'; style-src * 'unsafe-inline'; img-src 'self' data:;"
+  ]
 }
