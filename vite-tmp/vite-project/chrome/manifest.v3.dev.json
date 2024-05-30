@@ -1,0 +1,39 @@
+{
+  "version": "0.0.0",
+  "name": "form-data-observe-extension",
+  "manifest_version": 2,
+  "description": "一个大表单数据响应式观察器",
+  "browser_action": {
+    "default_title": "一个大表单数据响应式观察器",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "img/icon-16.png",
+    "48": "img/icon-48.png",
+    "128": "img/icon-128.png"
+  },
+  "web_accessible_resources": [
+    "inject.html"
+  ],
+  "background": {
+    "page": "background.html"
+  },
+  "devtools_page": "devtools.html",
+  "permissions": [
+    "contextMenus",
+    "management",
+    "tabs",
+    "storage",
+    "https://github.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "run_at": "document_start",
+      "js": [
+        "js/content_script.js"
+      ]
+    }
+  ],
+  "content_security_policy": "default-src 'self'; script-src 'self' http://localhost:3000 https://localhost:3000 'unsafe-eval'; connect-src http://localhost:3000 https://localhost:3000; style-src * 'unsafe-inline' 'self' blob:; img-src 'self' data:;"
+}

@@ -621,7 +621,7 @@ export class DeleteLogObserve {
     let html = `<ul><li>删除数据${remove.length}条</li>`;
     for (let i = 0; i < remove.length; i++) {
       const { path, payload } = remove[i];
-      html += `<li>路径&nbsp;&nbsp;${path.join('.')}</li>`;
+      html += `<li>路径&nbsp;${path.join('.')}</li>`;
     }
     html += '</ul>';
     if (logContainer) {
